@@ -62,6 +62,9 @@ public class Test2 {
             Collectors.toMap(x -> x.getSex(), x->x, (v1,v2)->v2));
 
 
+        //
+
+
     }
 
     @Test
