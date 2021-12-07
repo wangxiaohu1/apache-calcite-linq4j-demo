@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.util.Objects;
 
 /**
- * @author wangxiaohu
+ * @author wangxiaohu d
  * @version Id: Test5_functions.java, v0.1 2021年12月05日 19:13:21 wangxiaohu Exp $
  */
 public class Test5_functions {
