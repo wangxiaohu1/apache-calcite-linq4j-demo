@@ -18,7 +18,7 @@ import java.util.List;
  * @author wangxiaohu
  * @version Id: Test3_lookup.java, v0.1 2021年12月05日 19:13:21 wangxiaohu Exp $
  */
-public class Test3_lookup {
+public class Test2_lookup {
     List<Student> students = new ArrayList();
     @Before
     public void before(){

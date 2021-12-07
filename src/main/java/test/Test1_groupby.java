@@ -23,7 +23,7 @@ import test.model.Student;
  * @author wangxiaohu
  * @version Id: Test6_groupby.java, v0.1 2021年12月06日 09:47:58 wangxiaohu Exp $
  */
-public class Test6_groupby {
+public class Test1_groupby {
     List<Student> students = new ArrayList();
 
     @Before

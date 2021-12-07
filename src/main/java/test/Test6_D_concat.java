@@ -12,7 +12,7 @@ import org.junit.Test;
  * @author wangxiaohu
  * @version Id: Test6_concat.java, v0.1 2021年12月06日 17:45:01 wangxiaohu Exp $
  */
-public class Test6_concat {
+public class Test6_D_concat {
     /**
      * concat：拼接集合，相当于list.addAll
      */

@@ -10,19 +10,19 @@ import org.junit.Test;
 
 /**
  * @author wangxiaohu
- * @version Id: Test6_intersect.java, v0.1 2021年12月06日 17:45:01 wangxiaohu Exp $
+ * @version Id: Test6_union.java, v0.1 2021年12月06日 17:45:01 wangxiaohu Exp $
  */
-public class Test6_intersect {
+public class Test6_A_union {
     /**
-     * Intersect：集合交集
+     * concat：集合并集，重复的元素只会保留一个
      */
     @Test
-    public void test_intersect(){
+    public void test_union(){
         List<String> strings1 = Arrays.asList("a", "c", "b");
         List<String> strings2 = Arrays.asList("ew", "3", "b");
 
-        Enumerable<String> union = Linq4j.asEnumerable(strings1).intersect(Linq4j.asEnumerable(strings2));
+        Enumerable<String> union = Linq4j.asEnumerable(strings1).union(Linq4j.asEnumerable(strings2));
         System.out.println(union.toList().toString());
-        Assert.assertEquals("[b]", union.toList().toString());
+        Assert.assertEquals("[a, b, ew, c, 3]", union.toList().toString());
     }
 }

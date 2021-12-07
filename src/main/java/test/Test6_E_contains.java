@@ -17,7 +17,7 @@ import java.util.List;
  * @author wangxiaohu
  * @version Id: Test4_contains.java, v0.1 2021年12月05日 19:13:21 wangxiaohu Exp $
  */
-public class Test4_contains {
+public class Test6_E_contains {
     List<Student> students = new ArrayList();
     @Before
     public void before(){
