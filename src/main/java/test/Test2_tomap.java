@@ -1,12 +1,12 @@
 package test;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.apache.calcite.linq4j.Linq4j;
+import org.apache.calcite.linq4j.function.EqualityComparer;
+import org.apache.calcite.linq4j.function.Function1;
+import org.apache.calcite.linq4j.function.Functions;
 import org.junit.Before;
 import org.junit.Test;
 import test.model.Classes;
@@ -15,13 +15,11 @@ import static org.junit.Assert.*;
 
 /**
  * @author wangxiaohu
- * @version Id: Test2.java, v0.1 2021年11月06日 17:56:58 wangxiaohu Exp $
+ * @version Id: Test2_tomao.java, v0.1 2021年11月06日 17:56:58 wangxiaohu Exp $
  */
-public class Test2 {
+public class Test2_tomap {
     List<Student> students = new ArrayList();
-
     List<Classes> classess = new ArrayList();
-
     @Before
     public void before(){
         students.add(new Student(1,20,"小李"));
@@ -61,10 +59,6 @@ public class Test2 {
         Map<Integer, Student> map2 = list.stream().collect(
             Collectors.toMap(x -> x.getSex(), x->x, (v1,v2)->v2));
 
-
-        //
-
-
     }
 
     @Test
@@ -92,7 +86,57 @@ public class Test2 {
         //{1=小李, 2=小张, 3=null}
         assertEquals(3,map.size());
         assertEquals(null, map.get(3));
+    }
+
+    @Test
+    public void testToMap2WithComparer() {
+        final Map<String, String> map =
+                Linq4j.asEnumerable(Arrays.asList("foo", "bar", "far"))
+                        .toMap(Functions.identitySelector(),
+                                x -> x == null ? null : x.toUpperCase(Locale.ROOT),
+                                new EqualityComparer<String>() {
+                                    public boolean equal(String v1, String v2) {
+                                        //忽略大小写比较
+                                        return String.CASE_INSENSITIVE_ORDER.compare(v1, v2) == 0;
+                                    }
+                                    public int hashCode(String s) {
+                                        return s == null ? Objects.hashCode(null)
+                                                : s.toLowerCase(Locale.ROOT).hashCode();
+                                    }
+                                });
+        assertEquals(3, map.size());
+        //assertTrue(map.get("foo").equals("FOO"));
+        //assertTrue(map.get("Foo").equals("FOO"));
+        assertTrue(map.get("FOo").equals("FoO"));
+
+        System.out.println(map);
+    }
 
 
+    /**
+     * toMap(Function1<TSource, TKey> var1, EqualityComparer<TKey> var2)
+     */
+
+    @Test
+    public void testToMap2WithComparer2() {
+        final Map<String, String> map =
+                Linq4j.asEnumerable(Arrays.asList("foo", "bar", "far"))
+                        .toMap(Functions.identitySelector(),
+                                new EqualityComparer<String>() {
+                                    public boolean equal(String v1, String v2) {
+                                        //忽略大小写比较
+                                        return String.CASE_INSENSITIVE_ORDER.compare(v1, v2) == 0;
+                                    }
+                                    public int hashCode(String s) {
+                                        return s == null ? Objects.hashCode(null)
+                                                : s.toLowerCase(Locale.ROOT).hashCode();
+                                    }
+                                });
+        assertEquals(3, map.size());
+        assertTrue(map.get("foo").equals("foo"));
+        assertTrue(map.get("Foo").equals("foo"));
+        assertTrue(map.get("FOO").equals("foo"));
+
+        System.out.println(map);
     }
 }
