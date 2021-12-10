@@ -9,7 +9,7 @@ import org.junit.Test;
  * @author wangxiaohu
  * @version Id: Test7_enumerable.java, v0.1 2021年12月06日 16:49:36 wangxiaohu Exp $
  */
-public class Test0_enumerable {
+public class Test0_02_enumerable {
     /**
      * emptyEnumerable:空集合
      */

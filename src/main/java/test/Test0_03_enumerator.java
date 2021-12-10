@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author wangxiaohu
  * @version Id: Test7_enumerable.java, v0.1 2021年12月06日 16:49:36 wangxiaohu Exp $
  */
-public class Test0_enumerator {
+public class Test0_03_enumerator {
     /**
      * emptyEnumerator:空集合迭代器
      */
@@ -49,17 +49,6 @@ public class Test0_enumerator {
         Assert.assertEquals(null,e.current());
 
         Assert.assertEquals(false,e.moveNext());
-    }
-
-    @Test
-    public void test_transform1(){
-        List<String> strings = Arrays.asList("a", "b", "c");
-        Enumerator<String> enumerator = Linq4j.enumerator(strings);
-        Enumerator<String> transform = Linq4j.transform(enumerator, x->x.toUpperCase());
-        while(transform.moveNext()){
-            String current = transform.current();
-            System.out.println(current);
-        }
     }
 
 }

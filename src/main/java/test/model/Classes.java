@@ -11,6 +11,10 @@ public class Classes {
     private int no;
     private List<Student> students;
 
+    public Classes(String name, int no){
+        this.name = name;
+        this.no = no;
+    }
     public Classes(String name, int no, List<Student> students) {
         this.name = name;
         this.no = no;

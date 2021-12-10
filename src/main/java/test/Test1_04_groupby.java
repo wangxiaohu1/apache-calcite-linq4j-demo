@@ -23,7 +23,7 @@ import test.model.Student;
  * @author wangxiaohu
  * @version Id: Test6_groupby.java, v0.1 2021年12月06日 09:47:58 wangxiaohu Exp $
  */
-public class Test1_groupby {
+public class Test1_04_groupby {
     List<Student> students = new ArrayList();
 
     @Before
@@ -33,11 +33,15 @@ public class Test1_groupby {
         students.add(new Student(2,32,"小张"));
     }
 
+    /**
+     * groupBy: 分组
+     */
     @Test
     public void test_groupBy(){
-        Enumerable<Grouping<Integer, Student>> groupings = Linq4j.asEnumerable(students).groupBy(x->x.getSex());
+        Enumerable<Grouping<Integer, Student>> groupings = Linq4j.asEnumerable(students)
+            .groupBy(x->x.getSex());
+
         for(Grouping<Integer,Student> g : groupings) {
-            System.out.println(g.getKey());
             List<String> list = Linq4j.asEnumerable(g.<Student>toList()).select(x -> x.getName()).toList();
             if(1 == g.getKey()){
                 Assert.assertEquals("[小李, 小王]" , list.toString());
@@ -66,9 +70,12 @@ public class Test1_groupby {
         String str = Linq4j.asEnumerable(students)
             .groupBy(
                 student->student.getSex(),
-                (Function0<String>) ()->null, //appenderStr初始值
-                (appenderStr, student)-> appenderStr==null?student.getName():appenderStr+"+"+student.getName(),//appenderStr分组中元素列表迭代上一次处理的结果
-                (key,appenderStr)->key+":"+appenderStr  //key是每个分组的key，appenderStr是对每个分组中元素列表处理的最终结果(我们案例中，就是拼接name的结果)
+                //appenderStr初始值
+                (Function0<String>) ()->null,
+                //appenderStr分组中元素列表迭代上一次处理的结果
+                (appenderStr, student)-> appenderStr==null?student.getName():appenderStr+"+"+student.getName(),
+                //key是每个分组的key，appenderStr是对每个分组中元素列表处理的最终结果(我们案例中，就是拼接name的结果)
+                (groupKey,appenderStr)->groupKey+":"+appenderStr
             )
             .orderBy(Functions.identitySelector())
             .toList().toString();
@@ -98,6 +105,48 @@ public class Test1_groupby {
             appenderll.add(k+":"+strappender);
 
         }
-        System.out.println(appenderll.toString()); //[1:小李+小王, 2:小张]
+        System.out.println(appenderll.toString());
+        //[1:小李+小王, 2:小张]
+    }
+
+
+    /**
+     * groupBy(Function1<TSource, TKey> keySelector,Function1<TSource, TElement> elementSelector)
+     *
+     * keySelector: 分组key提取器
+     * elementSelector: 每个分组元素的的value提取器
+     */
+    @Test
+    public void test_groupBy_3(){
+        List<String> list = Linq4j.asEnumerable(students)
+            .groupBy(x->x.getSex(), x->x.getName())
+            .select(
+                group -> group.getKey() + ":" + group.select(x->x).toList().toString()
+
+            )
+            .toList();
+
+        Assert.assertEquals("[1:[小李, 小王], 2:[小张]]",list.toString());
+    }
+
+    /**
+     * groupBy(
+     *       Function1<TSource, TKey> keySelector,
+     *       Function2<TKey, Enumerable<TSource>, TResult> resultSelector)
+     *
+     * keySelector: 分组key选择器
+     * resultSelector: 结果选择器，第1个参数是分组key, 第2个参数分组结果group
+     */
+    @Test
+    public void test_groupBy_4(){
+        List<String> list = Linq4j.asEnumerable(students)
+            .groupBy(
+                x->x.getSex(),
+                (key, group) -> key + ":" + group.select(element -> element.getName()).toList().toString()
+            )
+
+            .toList();
+
+        Assert.assertEquals("[1:[小李, 小王], 2:[小张]]",list.toString());
     }
 }

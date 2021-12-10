@@ -5,6 +5,7 @@ import org.apache.calcite.linq4j.Linq4j;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  */
 public class Test6_C_except {
     /**
-     * exceptEnumerable<TSource> var1, boolean var2)：集合差集
+     * exceptEnumerable<TSource> var1, boolean var2)：集合差集,左边集合减去右边集合
      *  var2 默认false，求差集后，将将元素去重，例如 [a,a,b,c]和[b,c,d]的差集是[a]
      *  var2 为true  ，求差集后，元素不去重，例如 [a,a,b,c]和[b,c,d]的差集是[a,a]
      */

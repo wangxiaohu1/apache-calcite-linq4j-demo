@@ -14,7 +14,7 @@ import java.util.NoSuchElementException;
  * @author wangxiaohu
  * @version Id: Test4_first.java, v0.1 2021年12月05日 19:13:21 wangxiaohu Exp $
  */
-public class Test4_first {
+public class Test4_01_first {
     List<Student> students = new ArrayList();
     @Before
     public void before(){
